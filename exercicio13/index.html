@@ -1,0 +1,111 @@
+<div id="campo-minado">
+</div>
+
+<script>
+
+const TAMANHO_TABULEIRO = 10; // Tamanho do tabuleiro (10x10)
+const NUM_MINAS = 10; // Quantidade de minas
+
+const campoMinado = document.getElementById('campo-minado');
+
+function gerarTabuleiro() {
+  const tabela = document.createElement('table');
+  tabela.style.borderCollapse = 'collapse'; // Remove espaçamento entre células
+
+  for (let i = 0; i < TAMANHO_TABULEIRO; i++) {
+    const linha = document.createElement('tr');
+
+    for (let j = 0; j < TAMANHO_TABULEIRO; j++) {
+      const celula = document.createElement('td');
+      celula.textContent = ''; // Texto inicial vazio
+      celula.style.width = '30px'; // Define a largura da célula
+      celula.style.height = '30px'; // Define a altura da célula
+      celula.style.textAlign = 'center'; // Centraliza o texto
+      celula.style.border = '1px solid #ccc'; // Borda para cada célula
+      celula.style.cursor = 'pointer'; // Define o cursor como ponteiro
+
+      // Evento de clique para revelar a célula
+      celula.addEventListener('click', function() {
+        revelarCelula(i, j);
+      });
+
+      linha.appendChild(celula);
+    }
+
+    tabela.appendChild(linha);
+  }
+
+  campoMinado.appendChild(tabela);
+}
+
+function plantarMinas() {
+  const minas = [];
+  // Loop para posicionar as minas aleatoriamente
+  for (let i = 0; i < NUM_MINAS; i++) {
+    let posicaoValida = false;
+    while (!posicaoValida) {
+      const linhaAleatoria = Math.floor(Math.random() * TAMANHO_TABULEIRO);
+      const colunaAleatoria = Math.floor(Math.random() * TAMANHO_TABULEIRO);
+      if (!minas.find(m => m[0] === linhaAleatoria && m[1] === colunaAleatoria)) {
+        minas.push([linhaAleatoria, colunaAleatoria]);
+        posicaoValida = true;
+      }
+    }
+  }
+  return minas;
+}
+
+function revelarCelula(linha, coluna) {
+  const tabela = campoMinado.querySelector('table');
+  const celula = tabela.rows[linha].cells[coluna];
+
+  // Verifica se a célula já foi revelada
+  if (celula.textContent !== '') {
+    return;
+  }
+
+  const minas = plantarMinas(); // Gera as minas (apenas na primeira revelação)
+  const numMinasVizinhas = contarMinasVizinhas(linha, coluna, minas);
+
+  if (minas.find(m => m[0] === linha && m[1] === coluna)) {
+    // A célula contém uma mina - fim de jogo
+    celula.textContent = '';
+    alert('Você perdeu!');
+  } else {
+    celula.textContent = numMinasVizinhas > 0 ? numMinasVizinhas : '';
+    // Revelar células vizinhas sem minas recursivamente (opcional)
+    if (numMinasVizinhas === 0) {
+      for (let i = linha - 1; i <= linha + 1; i++) {
+        for (let j = coluna - 1; j <= coluna + 1; j++) {
+          if (i >= 0 && i < TAMANHO_TABULEIRO && j >= 0 && j < TAMANHO_TABULEIRO) {
+            revelarCelula(i, j);
+          }
+        }
+      }
+    }
+  }
+}
+
+function contarMinasVizinhas(linha, coluna, minas) {
+  let contagem = 0;
+  for (let i = linha - 1; i <= linha + 1; i++) {
+    for (let j = coluna - 1; j <= coluna + 1; j++) {
+      if (i >= 0 && i < TAMANHO_TABULEIRO && j >= 0 && j < TAMANHO_TABULEIRO) {
+        if (minas.find(m => m[0] === i && m[1] === j)) {
+          contagem++;
+        }
+      }
+    }
+  }
+  return contagem;
+}
+
+// Função para iniciar o jogo
+function iniciarJogo() {
+  campoMinado.innerHTML = ''; // Limpa o conteúdo anterior
+  gerarTabuleiro();
+}
+
+iniciarJogo(); // Inicia o jogo na página
+
+</script>

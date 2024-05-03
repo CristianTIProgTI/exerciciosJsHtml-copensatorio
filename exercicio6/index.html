@@ -1,0 +1,16 @@
+<ul id="lista"></ul>
+<script>
+const lista = document.getElementById('lista');
+
+    const itens = ['Item 1', 'Item 2', 'Item 3'];
+    
+    for (const item of itens) {
+      const elementoLista = document.createElement('li');
+      elementoLista.textContent = item;
+      lista.appendChild(elementoLista);
+    }
+    
+    lista.style.listStyleType = 'disc';
+    lista.style.padding = '10px';
+    lista.style.border = '1px solid #ccc';
+    </script>

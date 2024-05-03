@@ -1,0 +1,60 @@
+<form id="formulario">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" required>
+  
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  
+    <button type="submit">Enviar</button>
+  </form>
+  
+
+  <script>
+
+const formulario = document.getElementById('formulario');
+
+formulario.addEventListener('submit', function(event) {
+  event.preventDefault(); // Evita o envio padrão do formulário
+
+  const nome = document.getElementById('nome').value;
+  const email = document.getElementById('email').value;
+
+  // Validação básica dos dados (opcional)
+  if (nome === '' || email === '') {
+    alert('Preencha todos os campos!');
+    return;
+  }
+
+  // Simulação de envio de dados (ex: para um servidor)
+  console.log('Dados enviados: Nome:', nome, ', Email:', email);
+});
+
+formulario.style.display = 'flex';
+formulario.style.flexDirection = 'column';
+formulario.style.alignItems = 'center';
+formulario.style.padding = '20px';
+formulario.style.border = '1px solid #ccc';
+
+// Estilos para labels e inputs (opcional)
+const labels = document.querySelectorAll('label');
+labels.forEach(label => {
+  label.style.display = 'block';
+  label.style.marginBottom = '5px';
+});
+
+const inputs = document.querySelectorAll('input');
+inputs.forEach(input => {
+  input.style.width = '200px';
+  input.style.padding = '5px';
+  input.style.border = '1px solid #ccc';
+});
+
+// Estilo para o botão (opcional)
+const botao = document.querySelector('button');
+botao.style.padding = '10px 20px';
+botao.style.backgroundColor = '#007bff';
+botao.style.color = '#fff';
+botao.style.border = 'none';
+botao.style.cursor = 'pointer';
+
+  </script>
