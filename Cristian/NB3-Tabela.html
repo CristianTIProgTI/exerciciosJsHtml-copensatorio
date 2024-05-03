@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NB3-Tabela</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        h1{
+            text-align: center;
+            padding: 20px;
+            background-color: #101110;
+            color: white;
+            border: none;
+            border-radius: 20px; 
+        }
+        
+        /* Estilos para a tabela */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilo para o botão */
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #101110;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #cc1b0f;
+        }
+    </style>
+</head>
+<body>
+    <h1>Top bandas de Metal</h1>
+    <table id="tabela">
+        <thead>
+            <tr>
+                <th>BANDA</th>
+                <th>ESTILO</th>
+                <th>PAÍS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Iron Maiden</td>
+                <td>Heavy Metal</td>
+                <td>Inglaterra</td>
+            </tr>
+            <tr>
+                <td>Helloween</td>
+                <td>Power Metal</td>
+                <td>Alemanha</td>
+            </tr>
+            <tr>
+                <td>Immortal</td>
+                <td>Black Metal</td>
+                <td>Noruega</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="adicionarItem()">Adicionar Banda</button>
+
+    <script>
+        // Função para adicionar um novo item à tabela
+        function adicionarItem() {
+            // Solicita ao usuário que insira os dados
+            var banda = prompt("Digite o nome da banda:");
+            var estilo = prompt("Digite o estilo musical:");
+            var pais = prompt("Digite o país de origem:");
+
+            // Se o usuário inseriu algo e não cancelou
+            if (banda !== null && estilo !== null && pais !== null) {
+                // Seleciona a tabela
+                var tabela = document.getElementById("tabela");
+
+                // Adiciona uma nova linha à tabela
+                var newRow = tabela.insertRow();
+
+                // Adiciona as células à nova linha
+                var cell1 = newRow.insertCell(0);
+                var cell2 = newRow.insertCell(1);
+                var cell3 = newRow.insertCell(2);
+
+                // Define o texto das células com os dados inseridos pelo usuário
+                cell1.textContent = banda;
+                cell2.textContent = estilo;
+                cell3.textContent = pais;
+            }
+        }
+    </script>
+</body>
+</html>

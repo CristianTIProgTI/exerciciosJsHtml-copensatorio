@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exibir Imagens 2</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        /* Estilos para as imagens */
+        .imagem-galeria {
+            width: 300px; /* Largura da imagem */
+            height: auto; /* Altura automática para manter a proporção */
+            margin: 10px; /* Espaçamento entre as imagens */
+            border: 2px solid #ddd; /* Borda cinza */
+            border-radius: 5px; /* Borda arredondada */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+    </style>
+</head>
+<body>
+    <div id="galeria"></div>
+
+    <script>
+        // Array com URLs das imagens e seus respectivos textos alternativos
+        var imagens = [
+            { src: "Ideogram - Cheerleader limpando a casa (ilustration).jpeg", alt: "Descrição da imagem 1" },
+            { src: "Ideogram - Cheerleader limpando a casa (cinematic).jpeg", alt: "Descrição da imagem 2" },
+            
+        ];
+
+        // Seleciona o elemento div da galeria
+        var galeria = document.getElementById("galeria");
+
+        // Itera sobre o array de imagens e cria elementos img para cada uma delas
+        imagens.forEach(function(imagem) {
+            // Cria um elemento img
+            var imgElement = document.createElement("img");
+
+            // Define os atributos src e alt da imagem
+            imgElement.src = imagem.src;
+            imgElement.alt = imagem.alt;
+
+            // Adiciona a classe de estilo para a imagem
+            imgElement.classList.add("imagem-galeria");
+
+            // Adiciona a imagem à galeria
+            galeria.appendChild(imgElement);
+        });
+    </script>
+</body>
+</html>

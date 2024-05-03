@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NB2 - Lista</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        h1{
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #bdbdbd;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 20px;  
+        }
+        
+        /* Estilos para a lista */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Estilos para os itens da lista */
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Melhores séries de TV</h1>
+    <ul id="lista">
+        <!-- Lista pré-existente com 3 itens -->
+        <li>1 - Dark</li>
+        <li>2 - Game of Thrones</li>
+        <li>3 - Lost</li>
+    </ul>
+
+    <script>
+        var lista = document.getElementById("lista");
+
+        // Função para adicionar um novo item à lista
+        function adicionarItem() {
+            // Solicita ao usuário que insira o novo item
+            var novoItem = prompt("Digite um novo item:");
+
+            // Se o usuário inseriu algo e não cancelou
+            if (novoItem !== null && novoItem !== "") {
+                // Cria um elemento de lista (li)
+                var listItem = document.createElement("li");
+
+                // Define o texto do item
+                listItem.textContent = novoItem;
+
+                // Adiciona o item à lista
+                lista.appendChild(listItem);
+            }
+        }
+
+        // Adiciona um botão para chamar a função adicionarItem
+        var botaoAdicionar = document.createElement("button");
+        botaoAdicionar.textContent = "Adicionar Série";
+        botaoAdicionar.addEventListener("click", adicionarItem);
+        document.body.appendChild(botaoAdicionar);
+    </script>
+</body>
+</html>
