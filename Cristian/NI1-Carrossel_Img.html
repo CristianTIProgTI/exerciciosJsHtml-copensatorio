@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NI1-Carrossel de Imagens</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        /* Estilos para o carrossel */
+        .carrossel {
+            width: 60%;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Estilos para as imagens */
+        .carrossel-img {
+            display: none;
+            width: 70%;
+            margin: 0 auto;
+            transition: transform 0.5s ease;
+        }
+
+        /* Estilos para as legendas */
+        .legenda {
+            position: relative;
+            width: 50%;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Estilos para os botões de navegação */
+        .btn-navegacao {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px 15px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .btn-anterior {
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .btn-proximo {
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .btn-pausar {
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <h1>Imagens criadas por IA</h1>
+    
+    <div class="carrossel">
+        <p><br></p>
+        <img src="imagens\Ideogram - Emoji com espada (magic prompt).jpeg" class="carrossel-img" alt="Ideogram - Emoji com espada">
+        <div class="legenda">Ideogram - Emoji com espada</div>
+
+        <img src="imagens\Ideogram - Emoji pensador no museu (magic prompt).jpeg" class="carrossel-img" alt="Ideogram - Emoji pensador no museu">
+        <div class="legenda">Ideogram - Emoji pensador no museu</div>
+
+        <img src="imagens\Ideogram - hamster carpinteiro (typography).jpeg" class="carrossel-img" alt="Ideogram - hamster carpinteiro">
+        <div class="legenda">Ideogram - hamster carpinteiro</div>
+        <p><br></p>
+        <p><br></p>
+        <button class="btn-navegacao btn-anterior" onclick="mudarSlide(-1)">⏮ Anterior</button>
+        <button class="btn-navegacao btn-proximo" onclick="mudarSlide(1)">Próximo ⏭</button>
+        <p><br></p>
+        <p><br></p>
+        <button class="btn-navegacao btn-pausar" onclick="pausarCarrossel()">⏸ Pausar</button>
+    </div>
+
+    <script>
+        var slideIndex = 0;
+        var slides = document.getElementsByClassName("carrossel-img");
+        var legenda = document.getElementsByClassName("legenda");
+        var automatico = true;
+        mostrarSlides();
+
+        function mostrarSlides() {
+            var i;
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+                legenda[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            if (slideIndex < 1) {slideIndex = slides.length}
+            slides[slideIndex-1].style.display = "block";
+            legenda[slideIndex-1].style.display = "block";
+            if (automatico) {
+                setTimeout(mostrarSlides, 2000); // Muda a imagem a cada 2 segundos
+            }
+        }
+
+        function mudarSlide(n) {
+            automatico = false;
+            slideIndex += n;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            if (slideIndex < 1) {slideIndex = slides.length}
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+                legenda[i].style.display = "none";  
+            }
+            slides[slideIndex-1].style.display = "block";
+            legenda[slideIndex-1].style.display = "block";
+        }
+
+        function pausarCarrossel() {
+            automatico = false;
+        }
+    </script>
+<p><br></p>
+<a href="-paginaIni.html">⬅ Página Inicial</a> 
+</body>
+</html>
