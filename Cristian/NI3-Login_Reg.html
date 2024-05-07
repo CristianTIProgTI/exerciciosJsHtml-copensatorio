@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Registro</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        h1{
+            text-align: center;
+            margin-top: 5px;
+            padding: 20px;
+            background-color: #3c22ce;
+            color: white;
+            border-radius: 20px;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            
+        }
+
+        /* Estilos para o wrapper */
+        .wrapper {
+                    max-width: 600px; /* Define a largura máxima do conteúdo */
+                    margin: 0 auto; /* Centraliza o conteúdo na página */
+                    padding: 20px; /* Adiciona um espaçamento interno */
+                }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            top: 50px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+    <h1>🏫 ESCOLA POLIINF 💻</h1>
+    <div class="form-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Usuário" required>
+            <input type="password" id="loginPassword" placeholder="Senha" required>
+            <input type="submit" value="Entrar">
+            <p class="message" id="loginMessage"></p>
+        </form>
+
+        <h2>Registro</h2>
+        <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Usuário" required>
+            <input type="password" id="registerPassword" placeholder="Senha" required>
+            <input type="submit" value="Registrar">
+            <p class="message" id="registerMessage"></p>
+        </form>
+    </div>
+    
+    <p><br></p>
+    <a href="-paginaIni.html">⬅ Página Inicial</a>
+    </div>
+
+    <script>
+        // Função para validar o login
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita o envio do formulário padrão
+
+            var username = document.getElementById("loginUsername").value;
+            var password = document.getElementById("loginPassword").value;
+
+            // Simulação de dados no localStorage (substitua por um mecanismo de autenticação real)
+            var storedUsername = localStorage.getItem("username");
+            var storedPassword = localStorage.getItem("password");
+
+            if (username === storedUsername && password === storedPassword) {
+                document.getElementById("loginMessage").textContent = "Login bem-sucedido!";
+                window.location.href = "NB4-Formulário.html"; // Redireciona para a página secreta
+            } else {
+                document.getElementById("loginMessage").textContent = "Usuário ou senha inválidos.";
+            }
+        });
+
+        // Função para registrar um novo usuário
+        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Evita o envio do formulário padrão
+
+            var username = document.getElementById("registerUsername").value;
+            var password = document.getElementById("registerPassword").value;
+
+            // Simulação de armazenamento de dados no localStorage (substitua por um mecanismo de armazenamento real)
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+
+            document.getElementById("registerMessage").textContent = "Usuário registrado com sucesso!";
+        });
+    </script>
+
+
+
+</body>
+</html>
