@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NI5-Sistema de Votação</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .option label {
+            font-size: 18px;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .vote-button {
+            padding: 8px 20px;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Cores dos botões */
+        #mito .vote-button {
+            background-color: #28a745; /* Verde */
+        }
+
+        #molusco .vote-button {
+            background-color: #dc3545; /* Vermelho */
+        }
+
+        #gloria .vote-button {
+            background-color: #007bff; /* Azul */
+        }
+
+        #padre .vote-button {
+            background-color: #6c757d; /* Cinza */
+        }
+
+        #branco .vote-button {
+            background-color: #fff; /* Branco */
+            border: 1px solid #000; /* Contorno preto */
+            color: #000; /* Texto preto */
+        }
+
+        #nulo .vote-button {
+            background-color: #fd7e14; /* Laranja */
+        }
+
+        .result {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .total {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .winner {
+            font-weight: bold;
+            font-size: 24px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Votação</h1>
+        
+        <div class="option" id="mito">
+            <label for="option1">Mito</label>
+            <button class="vote-button" onclick="votar('opcao1')">Votar</button>
+            <span id="result1" class="result">0 votos</span>
+        </div>
+        
+        <div class="option" id="molusco">
+            <label for="option2">Molusco</label>
+            <button class="vote-button" onclick="votar('opcao2')">Votar</button>
+            <span id="result2" class="result">0 votos</span>
+        </div>
+        
+        <div class="option" id="gloria">
+            <label for="option3">Glória a Deux</label>
+            <button class="vote-button" onclick="votar('opcao3')">Votar</button>
+            <span id="result3" class="result">0 votos</span>
+        </div>
+
+        <div class="option" id="padre">
+            <label for="option4">Candidato Padre</label>
+            <button class="vote-button" onclick="votar('opcao4')">Votar</button>
+            <span id="result4" class="result">0 votos</span>
+        </div>
+
+        <div class="option" id="branco">
+            <label for="option5">Branco</label>
+            <button class="vote-button" onclick="votar('opcao5')">Votar</button>
+            <span id="result5" class="result">0 votos</span>
+        </div>
+
+        <div class="option" id="nulo">
+            <label for="option6">Nulo</label>
+            <button class="vote-button" onclick="votar('opcao6')">Votar</button>
+            <span id="result6" class="result">0 votos</span>
+        </div>
+
+        <div class="total">Votos Válidos: <span id="votosValidos">0</span> | Total: <span id="totalVotos">0</span></div>
+        <div class="winner" id="opcaoVencedora"></div>
+    </div>
+
+    <p><br></p>
+    <a href="-paginaIni.html">⬅ Página Inicial</a>
+    </div>
+
+    <script>
+        // Contadores de votos
+        var votosValidos = 0;
+        var totalVotos = 0;
+        
+        // Função para votar
+        function votar(opcao) {
+            var resultadoElemento = document.getElementById("result" + opcao.charAt(opcao.length-1));
+            var contagemVotos = parseInt(resultadoElemento.textContent);
+            resultadoElemento.textContent = (contagemVotos + 1) + " votos";
+
+            // Atualiza contagem de votos válidos e total
+            if (opcao !== "opcao5" && opcao !== "opcao6") {
+                votosValidos++;
+            }
+            totalVotos++;
+            document.getElementById("votosValidos").textContent = votosValidos;
+            document.getElementById("totalVotos").textContent = totalVotos;
+
+            // Determina a opção vencedora
+            determinarOpcaoVencedora();
+        }
+
+        // Função para determinar a opção vencedora
+        function determinarOpcaoVencedora() {
+            var opcoes = ["Mito", "Molusco", "Glória a Deux", "Candidato Padre"];
+            var votos = [0, 0, 0, 0];
+
+            // Obtém o número de votos para cada opção válida
+            for (var i = 0; i < opcoes.length; i++) {
+                var resultadoElemento = document.getElementById("result" + (i + 1));
+                votos[i] = parseInt(resultadoElemento.textContent);
+            }
+
+            // Determina a opção com mais votos
+            var maxVotos = Math.max(...votos);
+            var opcaoVencedora = opcoes[votos.indexOf(maxVotos)];
+
+            // Exibe a opção vencedora
+            document.getElementById("opcaoVencedora").textContent = "Opção Vencedora: " + opcaoVencedora;
+        }
+    </script>
+</body>
+</html>
