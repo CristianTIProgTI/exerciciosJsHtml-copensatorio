@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NA1-Lista de Tarefas</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input, select, button {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .priority {
+            padding: 8px 15px;
+            border-radius: 4px;
+            color: #000;
+        }
+
+        .priority-normal {
+            background-color: #ffff00; /* Amarelo */
+        }
+
+        .priority-high {
+            background-color: #ff0000; /* Vermelho */
+        }
+
+        .priority-low {
+            background-color: #008000; /* Verde */
+        }
+
+        .edit-button {
+            padding: 6px 10px;
+            border-radius: 4px;
+            background-color: #007bff; /* Azul */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .delete-button {
+            padding: 6px 10px;
+            border-radius: 4px;
+            background-color: #ff0000; /* Azul */
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+        <form id="task-form">
+            <label for="description">Descrição: 📃🖊</label>
+            <input type="text" id="description" required>
+
+            <label for="date">Data: 📆</label>
+            <input type="date" id="date" required>
+
+            <label for="priority">Prioridade: ⚠</label>
+            <select id="priority">
+                <option value="normal">Normal</option>
+                <option value="high">Alta</option>
+                <option value="low">Baixa</option>
+            </select>
+
+            <button type="submit">Adicionar / Editar Tarefa</button>
+        </form>
+
+        <table id="task-table">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Data</th>
+                    <th>Prioridade</th>
+                    <th>Dias Restantes</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="task-list"></tbody>
+        </table>
+    </div>
+
+    <p><br></p>
+    <a href="-paginaIni.html">⬅ Página Inicial</a>
+    </div>
+
+    <script>
+        // Carregar tarefas do localStorage
+        document.addEventListener("DOMContentLoaded", function() {
+            loadTasks();
+        });
+
+        // Adicionar evento de envio de formulário
+        document.getElementById("task-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            addTask();
+        });
+
+        // Adicionar tarefa
+        function addTask() {
+            var description = document.getElementById("description").value;
+            var date = document.getElementById("date").value;
+            var priority = document.getElementById("priority").value;
+
+            var task = {
+                description: description,
+                date: date,
+                priority: priority
+            };
+
+            var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.push(task);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            loadTasks();
+            document.getElementById("task-form").reset();
+        }
+
+        // Carregar tarefas
+        function loadTasks() {
+            var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            var tableBody = document.getElementById("task-list");
+            tableBody.innerHTML = "";
+
+            tasks.forEach(function(task, index) {
+                var row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${task.description}</td>
+                    <td>${task.date}</td>
+                    <td><span class="priority priority-${task.priority}">${task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}</span></td>
+                    <td>${calculateDaysRemaining(task.date)}</td>
+                    <td>
+                        <button class="edit-button" onclick="editTask(${index})">Editar</button>
+                        <button class="delete-button" onclick="deleteTask(${index})">Excluir</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Calcular dias restantes
+        function calculateDaysRemaining(date) {
+            var today = new Date();
+            var taskDate = new Date(date);
+            var timeDiff = taskDate.getTime() - today.getTime();
+            var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            return daysDiff;
+        }
+
+        // Editar tarefa
+        function editTask(index) {
+            var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            var task = tasks[index];
+
+            document.getElementById("description").value = task.description;
+            document.getElementById("date").value = task.date;
+            document.getElementById("priority").value = task.priority;
+
+            tasks.splice(index, 1);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            loadTasks();
+        }
+
+        // Excluir tarefa
+        function deleteTask(index) {
+            var tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.splice(index, 1);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            loadTasks();
+        }
+    </script>
+</body>
+</html>
